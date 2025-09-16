@@ -13,7 +13,7 @@ class Product(models.Model):
     price = models.IntegerField()
     description = models.TextField()
     thumbnail = models.URLField(blank=True, null=True)
-    category = models.CharField(max_length=255)
+    category = models.CharField(max_length=255, choices=CATEGORY_CHOICES)
     is_featured = models.BooleanField(default=False)
     brand = models.TextField(max_length=255)
     stock = models.IntegerField()

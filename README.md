@@ -1,11 +1,106 @@
 tautan aplikasi: https://muhammad-rizky413-footballshop.pbp.cs.ui.ac.id
 
+## TUGAS 3
+-  Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
+    Dalam pengimplementasian sebuah platform, kita memerlukan data delivery untuk: 
+    1. Menjembatani komunikasi antara sisi client (misalnya browser atau aplikasi mobile) dengan sisi server. Tanpa adanya data delivery, user tidak bisa mengakses atau memanfaatkan data yang disimpan di server.
+    2. Data yang disimpan di database dapat dikirimkan dalam format yang lebih user-friendly (HTML, JSON, atau XML) sehingga dapat ditampilkan di antarmuka dengan baik.
+    3. Data delivery memastikan setiap perubahan yang terjadi pada database segera tercermin pada tampilan aplikasi. Hal ini membuat informasi yang dilihat user selalu up-to-date dan sinkron dengan data sesungguhnya di server.
+    4. Data delivery mengatur bagaimana data dikirimkan, apakah melalui full page rendering, AJAX, REST API, atau GraphQL. Cara ini memengaruhi performa aplikasi dan pengalaman pengguna, seperti kecepatan loading halaman serta penghematan bandwidth.
+    5. Dalam proses pengiriman data, data delivery memungkinkan penerapan validasi, autentikasi, dan otorisasi. Hal ini memastikan hanya pengguna yang berhak yang dapat mengakses data tertentu sehingga kerahasiaan dan integritas data tetap terjaga.
+    6. Data delivery memungkinkan pertukaran data lintas sistem menggunakan format standar seperti JSON atau XML, sehingga platform bisa saling berkomunikasi dengan lancar.
+
+-  Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
+    Menurut saya pribadi, JSON lebih baik daripada XML karena penulisannya yang lebih mudah dimengerti. Namun, masing masing format itu memiliki keunggulannya masing-masing, diantaranya:
+    JSON:
+    1. Lebih ringkas dan mudah dibaca
+    2. Ukuran data lebih kecil
+    3. Parsing lebih cepat
+    4. Sangat cocok untuk web API
+    5. Mudah dipahami developer
+    XML:
+    1. Mendukung metadata dengan atribut
+    2. Fleksibel dan ekspresif
+    3. Ada dukungan validasi
+    4. Cocok untuk sistem besar dan lama (legacy)
+    5. Lebih formal dalam struktur data
+    JSON lebih populer dibandingkan XML karena strukturnya lebih sederhana, ringkas, dan mudah dibaca. JSON juga langsung sesuai dengan model data di banyak bahasa pemrograman, sehingga tidak membutuhkan proses tambahan seperti data binding atau serialisasi yang rumit pada XML.
+    Referensi:
+    https://blog.axway.com/learning-center/apis/api-management/why-json-won-over-xml
+
+- Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?
+    Method is_valid memiliki berbagai fungsi, seperti:
+    1. Memeriksa apakah data yang dikirimkan ke form sesuai dengan aturan validasi yang sudah ditentukan pada field form tersebut (panjang minimal, wajib diisi, format email, dll).
+    2. Jika semua field valid, maka is_valid() akan mengembalikan nilai True. Selain itu, data yang sudah “dibersihkan” bisa diakses lewat atribut form.cleaned_data.
+    3. Jika ada field yang tidak valid, maka is_valid() akan mengembalikan False dan Django otomatis menambahkan pesan error yang bisa ditampilkan di template.
+    Kita membutuhkan method is_valid() untuk memastikan data yang masuk ke sistem aman dan sesuai aturan sebelum disimpan ke database, memudahkan developer dalam menangani error input pengguna, dan menjaga konsistensi dan integritas data tanpa harus menulis logika validasi manual di banyak tempat.
+
+-  Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
+    Token csrf_token digunakan untuk memastikan bahwa request yang dikirim memang berasal dari user yang sah (session/browser yang benar), bukan dari sumber luar yang berbahaya. Dengan begitu, csrf_token berfungsi sebagai perlindungan terhadap Cross-Site Request Forgery (CSRF) attacks. 
+    Jika kita tidak menambahkan csrf_token, form masih dapat terkirim namun server tidak bisa membedakan mana request asli dari user dan mana yang “dipalsukan” oleh pihak luar. 
+    Hal ini daat dimanfaatkan oleh penyerang dengan cara membuat halaman web berbahaya (misalnya dengan form atau script tersembunyi) yang ketika dikunjungi user, otomatis mengirim request ke aplikasi Django tanpa sepengetahuan user karena request ini membawa session/cookie user yang valid sehingga server bisa mengira request itu sah.
+
+- Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+1. Tambahkan 4 fungsi views baru untuk melihat objek yang sudah ditambahkan dalam format XML, JSON, XML by ID, dan JSON by ID.
+    Menambahkan 4 fungsi dengan nama show_xml, show_json, show_xml_by_id, show_json_by_id dengan alur:
+    - Menambahkan import HttpResponse dan Serializer pada bagian paling atas views.py yang ada pada direktori main.
+    - Membuat fungsi baru yang menerima parameter request dengan nama show_xml dan membuat sebuah variabel di dalam fungsi tersebut yang menyimpan hasil query dari seluruh data yang ada pada Product.
+    - Menambahkan return function berupa HttpResponse yang berisi parameter data hasil query yang sudah diserialisasi menjadi XML dan parameter content_type="application/xml". 'serializers' di fungsi ini digunakan untuk menerjemahkan objek model menjadi format lain seperti dalam fungsi ini adalah XML.
+    - Mengimport fungsi yang sudah dibuat tadi di urls.py yang ada pada direktori main.
+    - Menambahkan path url ke dalam urlpatterns untuk mengakses fungsi yang sudah diimpor tadi.
+    - Membuat sebuah fungsi baru yang menerima parameter request dengan nama show_json dengan sebuah variabel di dalamnya yang menyimpan hasil query dari seluruh data yang ada pada Product di views.py yang ada pada direktori main.
+    - Menambahkan return function berupa HttpResponse yang berisi parameter data hasil query yang sudah diserialisasi menjadi JSON dan parameter content_type="application/json".
+    - Mengimport fungsi yang sudah dibuat tadi di urls.py yang ada pada direktori main.
+    - Menambahkan path url ke dalam urlpatterns untuk mengakses fungsi yang sudah diimpor tadi.
+    - Membuat dua fungsi baru yang menerima parameter request dan product_id dengan nama show_xml_by_id dan show_json_by_id di views.py yang ada pada direktori main.
+    - Membuat sebuah variabel di dalam fungsi tersebut yang menyimpan hasil query dari data dengan id tertentu yang ada pada Product.
+    - Menambahkan return function berupa HttpResponse yang berisi parameter data hasil query yang sudah diserialisasi menjadi JSON atau XML dan parameter content_type dengan value "application/xml" (untuk format XML) atau "application/json" (untuk format JSON).
+    - Menambahkan blok try except pada fungsi untuk mengantisipasi kondisi ketika data dengan product_id tertentu tidak ditemukan dalam basis data. Jika data tidak ditemukan, kembalikan HttpResponse dengan status 404 sebagai tanda data tidak ada.
+    - Mengimport fungsi yang sudah dibuat tadi di urls.py yang ada pada direktori main.
+    - Menambahkan path URL ke dalam urlpatterns untuk mengakses fungsi yang sudah diimpor tadi.
+
+2. Membuat routing URL untuk masing-masing views yang telah ditambahkan pada poin 1.
+    Dilakukan dengan cara mengimport fungsi-fungsi yang sudah dibuat pada poin 1 dan menambahkan path URL ke dalam variabel urlpatterns di urls.py yang ada pada direktori main.
+
+3. Membuat halaman yang menampilkan data objek model yang memiliki tombol "Add" yang akan redirect ke halaman form, serta tombol "Detail" pada setiap data objek model yang akan menampilkan halaman detail objek.
+    Dilakukan dengan tahap sebagai berikut:
+    - Menambahkan beberapa import dan fungsi-fungsi pada bagian paling atas berkas views.py yang ada pada direktori main seperti:
+    a. Fungsi show_main diperbarui dengan menambahkan Product.objects.all() untuk mengambil seluruh objek Product yang tersimpan pada database.
+    b. Fungsi create_product digunakan untuk menghasilkan form yang dapat menambahkan data Product secara otomatis ketika data di-submit dari form.
+    c. Fungsi show_product menggunakan get_object_or_404(Product, pk=id) untuk mengambil objek Product berdasarkan primary key (id). Jika objek tidak ditemukan, akan mengembalikan halaman 404.
+    - Import fungsi-fungsi yang sudah dibuat tadi dan menambahkan path URL ke dalam variabel urlpatterns di urls.py yang ada pada direktori main.
+    - Mengupdate kode di dalam blok content untuk menampilkan data product serta tombol "Add Product" yang akan redirect ke halaman form di main.html pada direktori main/templates.
+    - Membuat dua berkas HTML baru pada direktori main/templates untuk halaman form input dan detail produk.
+
+4. Membuat halaman form untuk menambahkan objek model pada app sebelumnya.
+    Dilakukan dengan cara membuat berkas baru pada direktori main dengan nama forms.py untuk membuat struktur form yang dapat menerima data Product baru sekaligus menambahkan beberapa hal:
+    a. model = Product untuk menunjukkan model yang akan digunakan untuk form. Ketika data dari form disimpan, isi dari form akan disimpan menjadi sebuah objek Product.
+    b. fields = ["name", "price", "description", "thumbnail", "category", "is_featured", "brand", "stock"] untuk menunjukkan field dari model Product yang digunakan untuk form.
+    Selain itu,  ditambahkan fungsi create_news.html yang dalamnya ada {% csrf_token %},  token yang berfungsi sebagai security. Token ini di-generate secara otomatis oleh Django untuk mencegah serangan berbahaya, serta {{ form.as_table }}, merupakan template tag yang digunakan untuk menampilkan fields form yang sudah dibuat pada forms.py sebagai table.
+
+5. Membuat halaman yang menampilkan detail dari setiap data objek model.
+    Selain pemanfaatan fungsi show_product yang sudah dijabarkan di nomor 3 tadi, dibuat pula file news_detail.html yang berisi apa saja yang perlu ditampilkan nanti, seperti tombol kembali ke menu utama dan produk secara lebih lengkap.
+
+6. Membuat sebuah README.md yang berisi tautan menuju aplikasi PWS yang sudah di-deploy, serta jawaban dari beberapa pertanyaan berikut.
+    Ini dia file README.md nya.
+
+7. Mengakses keempat URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman, dan menambahkannya ke dalam README.md.
+    Screenshot hasil akses URL:
+    https://drive.google.com/drive/folders/1GgAkMPNKTmuJLzEyXToGOYZPi6styPFf?usp=sharing
+
+8. Melakukan add-commit-push ke GitHub.
+    Ketiga command tersebut sudah dilakukan dan Github sudah terupdate.
+
+- Apakah ada feedback untuk asdos di tutorial 2 yang sudah kalian kerjakan?
+    Asdos sudah bagus dalam menyampaikan ketentuan maupun step-by-step tutorial dan sangat terbuka terhadap pertanyaan seputar tutorialnya.
+
+## TUGAS 2
 - Cara mengimplementasikan checklist secara step-by-step:
 1. Membuat sebuah proyek Django baru.
     Melakukan instalasi Django dan inisiasi projek Django dengan nama directory football-shop lengkap dengan penyiapan dependency dan konfigurasi environmentnya.
 
 2. Membuat aplikasi dengan nama main pada proyek tersebut.
-    Membentuk aplikasi main di proyek dengan command 'python manage.py startapp main' dan mendaftarkannya di variabel INSTALLED_APPS pada berkas settings.py dalam direktori football_news.
+    Membentuk aplikasi main di proyek dengan command 'python manage.py startapp main' dan mendaftarkannya di variabel INSTALLED_APPS pada berkas settings.py dalam direktori football_shop.
 
 3. Melakukan routing pada proyek agar dapat menjalankan aplikasi main.
     Membuat file urls.py di direktori main. Di dalam file tersebut, dilakukan berbagai hal:
