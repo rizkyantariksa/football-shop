@@ -1,5 +1,159 @@
 tautan aplikasi: https://muhammad-rizky413-footballshop.pbp.cs.ui.ac.id
 
+## TUGAS 5
+- Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+    Urutan prioritas pengambilan CSS selector:
+    1. Inline styles
+        Aturan CSS yang langsung ditulis di atribut style pada elemen HTML, dianggap paling spesifik karena developer secara eksplisit nempelkan aturan ke elemen tersebut.
+    2. ID selectors
+        Selector yang menggunakan tanda # untuk menunjuk elemen berdasarkan id yang bersifat unik di halaman.
+    3. Classes selector
+        Selector dengan tanda titik (.) untuk menargetkan elemen berdasarkan class. Class bisa dipakai berulang kali di banyak elemen, sehingga spesifik tapi tidak seunik ID.
+    4. Element selector
+        Selector yang langsung menargetkan elemen berdasarkan nama tag HTML (seperti p, h1, div) atau pseudo-element (::before, ::after). Prioritasnya rendah karena sifatnya terlalu umum (bisa berlaku untuk banyak elemen sekaligus).
+
+- Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design, serta jelaskan mengapa!
+    Responsive design adalah pendekatan desain web yang membuat tampilan website otomatis menyesuaikan ukuran layar perangkat yang digunakan (desktop, tablet, smartphone). Konsep ini penting karena:
+    1. Pengguna mengakses web dari berbagai device baik mobile maupun desktop.
+    2. UX yang fleksibel membuat website mudah digunakan tanpa perlu zoom in/out atau scroll horizontal.
+    3. Satu website bisa menyesuaikan di semua perangkat tanpa membuat versi yang terpisah.
+
+    Contoh aplikasi yang sudah menerapkan:
+    1. Instagram (web)
+        Layoutnya menyesuaikan layar, dimana di desktop muncul feed + sidebar dan di mobile hanya feed penuh tanpa sidebar.
+    2. Tokopedia
+        Tampilan produk, tombol, dan navigasi otomatis menyesuaikan ukuran layar sehingga nyaman digunakan di HP.
+    Kedua aplikasi ini sangat mengutamakan kenyamanan pengguna lintas perangkat, terutama karena mayoritas user mengakses melalui smartphone.
+
+    Contoh aplikasi yang belum menerapkan:
+    1. Website sekolah/universitas lama dengan layout fixed (misalnya academic.cs.ui.ac.id)
+        Jika dibuka di desktop ataupun device lain yang tidak sesuai dengan tampilannya, ada beberapa kendala teks terlalu kecil, tombol susah diklik, dan pengguna harus zoom in/out manual.
+    Website lama ini biasanya masih menggunakan desain statis tanpa media queries, sehingga tampilannya tidak fleksibel mengikuti ukuran layar.
+
+- Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+    1. Margin
+        Merupakan ruang kosong di luar elemen yang digunakan untuk memberi jarak antar elemen. Margin berfungsi mengatur jarak antar elemen agar tidak saling menempel. Contoh implementasi:
+        div {
+            margin: 20px; // memberi jarak 20px di semua sisi elemen
+        }
+    
+    2. Border
+        Merupakan garis tepi yang mengelilingi elemen dan berada di antara margin dan padding. Border berfungsi untuk menandai batas elemen secara visual, bisa berupa garis solid, putus-putus, berwarna, dll. Contoh Implementasi:
+        div {
+            border: 4px solid white; // border tebal 4px, solid, warna putih
+        }
+    
+    3. Padding
+        Merupakan ruang kosong di dalam elemen yang terletak antara konten dan border. Padding berfungsi memberi jarak antara isi (teks/gambar) dengan tepi border. Contoh implementasi:
+        div {
+        padding: 15px; // memberi ruang 15px antara teks dan border
+        }
+
+
+- Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+    1. Flexbox (Flexible Box Layout)
+        Merupakan model layout 1 dimensi yang digunakan untuk menyusun elemen secara fleksibel dalam satu arah, baik horizontal (row) maupun vertikal (column). Flexbox berfungsi untuk:
+        - Membuat elemen sejajar secara otomatis tanpa harus hitung manual dengan float atau position.
+        - Memudahkan pengaturan alignment (rata kiri, kanan, tengah, atau rata di antara).
+        - Cocok untuk layout yang lebih fokus ke satu baris atau satu kolom.
+
+    2. Grid Layout
+        Merupakan model layout 2 dimensi yang memungkinkan penempatan elemen dalam baris (rows) dan kolom (columns) secara bersamaan. Grid Layout berfungsi untuk:
+        - Membuat struktur layout kompleks seperti tabel, dashboard, atau halaman penuh.
+        - Fleksibel untuk mengatur ukuran, posisi, dan jarak antar elemen di grid.
+        - Cocok untuk layout yang lebih fokus ke dua dimensi (rows + columns).
+
+- Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+    1.  Implementasikan fungsi untuk menghapus dan mengedit product.
+        Menghapus product
+        - Membuat fungsi baru dengan nama delete_product yang menerima parameter request dan id pada views.py di folder main untuk menghapus data product.
+        - Mengimport fungsi tadi ke urls.py yang ada pada folder main.
+        - Menambahkan path url ke dalam urlpatterns untuk mengakses fungsi yang sudah diimpor.
+        - Memperbarui potongan kode di loop product_list agar terdapat tombol hapus untuk setiap produk yang ada pada main.html di folder main/templates.
+        
+        Mengedit product
+        - Membuat fungsi baru bernama edit_product yang menerima parameter request dan id di views.py yang ada pada subdirektori main.
+        - Membuat berkas HTML baru dengan nama edit_product.html pada subdirektori main/templates.
+        - Mengimport fungsi tadi ke urls.py yang ada pada folder main.
+        - Menambahkan path url ke dalam urlpatterns untuk mengakses fungsi yang sudah diimpor.
+        - Memperbarui potongan kode di loop product_list agar terdapat tombol edit untuk setiap produk yang ada pada main.html di folder main/templates.
+
+    2.  Kustomisasi desain pada template HTML yang telah dibuat pada tugas-tugas sebelumnya menggunakan CSS atau CSS framework (seperti Bootstrap, Tailwind, Bulma) dengan ketentuan sebagai berikut:
+        a. Kustomisasi halaman login, register, tambah product, edit product, dan detail product semenarik mungkin.
+            Halaman login
+            - Menggunakan base template dan title khusus halaman login.
+            - Menambahkan background abu-abu muda dengan card putih di tengah layar.
+            - Memberikan header menarik dengan judul besar dan subteks sambutan.
+            - Menampilkan error form dan error field dengan styling berbeda agar lebih jelas.
+            - Menggunakan input modern dengan efek fokus berwarna biru.
+            - Tombol login dibuat full width, warna biru dengan efek hover.
+            - Menampilkan pesan sukses/error/info dengan badge berwarna.
+            - Menyediakan link ke halaman register dengan tampilan call-to-action di bawah form.
+
+            Halaman register
+            - Menggunakan base template dengan title khusus halaman register.
+            - Latar belakang abu-abu muda, card putih dengan shadow di tengah layar.
+            - Header menarik dengan judul Join Us dan subteks ajakan membuat akun.
+            - Validasi form ditampilkan rapi dengan box error berwarna merah.
+            - Input field diberi label jelas, padding besar, dan efek fokus biru.
+            - Tombol submit full width berwarna biru dengan efek hover + ring.
+            - Pesan sukses/error/info ditampilkan dalam box warna berbeda sesuai status.
+            - Link ajakan ke halaman login disediakan di bawah form agar mudah diakses.
+
+            Tambah product
+            - Menggunakan base template dengan title khusus Create Product.
+            - Latar belakang abu-abu muda, form card putih dengan border dan padding besar di tengah halaman.
+            - Menyediakan navigasi Back to Product(s) agar pengguna bisa kembali dengan mudah.
+            - Header form dengan judul besar dan deskripsi singkat tujuan form.
+            - Setiap field form diberi label jelas, area input yang lebar, dan pesan error merah di bawahnya.
+            - Tersedia teks bantuan (help_text) untuk field yang membutuhkannya.
+            - Bagian aksi di bawah form memiliki dua tombol: Cancel (abu-abu) dan Publish Product (biru).
+            - Layout tombol responsif: pada layar kecil ditampilkan vertikal, pada layar besar ditampilkan horizontal.
+
+            Edit product
+            - Menggunakan base template dengan title khusus Edit Product.
+            - Latar belakang abu-abu muda, form card putih dengan border dan padding besar.
+            - Menyediakan navigasi Back to Product(s) di atas halaman.
+            - Header form dengan judul Edit Product dan deskripsi singkat.
+            - Setiap field form diberi label jelas, area input yang lebar, pesan error merah, dan teks bantuan jika ada.
+            - Bagian aksi di bawah form punya dua tombol: Cancel (abu-abu) untuk kembali, dan Update Product (biru) untuk menyimpan perubahan.
+            - Layout tombol responsif: pada layar kecil vertikal, pada layar besar horizontal.
+
+            Detail product
+            - Menggunakan base template dengan title dinamis sesuai nama produk.
+            - Latar belakang abu-abu muda, konten di tengah dengan lebar maksimal besar.
+            - Navigasi balik ke daftar produk dengan teks Back to Product(s).
+            - Card artikel putih dengan border dan rounded corners sebagai container detail produk.
+            - Header menampilkan kategori produk sebagai badge berwarna biru, serta badge tambahan untuk Featured bila aktif.
+            - Judul produk ditampilkan besar (text-3xl hingga text-4xl), bold, dengan spacing rapi.
+            - Informasi tambahan berupa tanggal pembuatan dan jumlah views dalam format rapi.
+            - Thumbnail produk (jika ada) ditampilkan besar dengan tinggi responsif (64–96) dan rounded.
+            - Deskripsi produk ditampilkan dengan gaya prose rapi, teks abu-abu, dan mendukung line break.
+            - Bagian bawah menampilkan informasi author, berupa username pemilik produk atau Anonymous jika tidak ada user, dengan teks pendukung yang lebih kecil.
+
+        b. Kustomisasi halaman daftar product menjadi lebih menarik dan responsive. Kemudian, perhatikan kondisi berikut:
+            1. Jika pada aplikasi belum ada product yang tersimpan, halaman daftar product akan menampilkan gambar dan pesan bahwa belum ada product yang terdaftar.
+            2. Jika sudah ada product yang tersimpan, halaman daftar product akan menampilkan detail setiap product dengan menggunakan card (tidak boleh sama persis dengan desain pada Tutorial!).
+            - Membuat struktur card product baru yang menggunakan container dengan kelas Tailwind seperti bg-blue-50 border border-blue-200 rounded-lg shadow-sm untuk memberi nuansa warna biru.
+            - Menambahkan bagian thumbnail produk (jika ada), ditampilkan di bagian atas card dengan style object-cover rounded-t-lg agar gambar proporsional dan rapi.
+            - Menampilkan nama produk dengan font tebal (font-semibold text-gray-900) serta deskripsi singkat dalam teks yang lebih ringan (text-gray-600).
+            - Memberikan section aksi (action buttons) seperti Edit dan Delete di bagian bawah card untuk mempermudah pengelolaan produk bagi user yang memposting produk.
+            - Mengatur card dalam layout grid responsive (misalnya grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6) supaya tampilan menyesuaikan ukuran device.
+
+        c. Untuk setiap card product, buatlah dua buah button untuk mengedit dan menghapus product pada card tersebut!
+            - Menambahkan tombol Edit di card product dengan styling bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors, menggunakan URL {% url 'main:edit_product' product.id %} dan diletakkan di bagian bawah card dalam container flex justify-between.
+            - Tambahkan tombol Delete di card product dengan styling bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors, menggunakan URL {% url 'main:delete_product' product.id %} dan diposisikan sejajar dengan tombol Edit menggunakan flex justify-between.
+
+        d. Buatlah navigation bar (navbar) untuk fitur-fitur pada aplikasi yang responsive terhadap perbedaan ukuran device, khususnya mobile dan desktop.
+            - Membuat struktur utama navbar menggunakan elemen <nav> dengan kelas fixed top-0 left-0 w-full bg-white border-b border-gray-200 shadow-sm z-50, sehingga navbar selalu berada di atas layar dan terlihat jelas pada semua halaman.
+            - Menambahkan wrapper max-w-7xl mx-auto flex justify-between items-center h-16 untuk mengatur tata letak logo, menu, dan user section agar sejajar secara horizontal.
+            - Mengatur navigasi desktop dengan <div class="hidden md:flex">, sehingga link seperti Home dan Create Product hanya tampil pada layar medium ke atas.
+            - Membuat section user desktop (login/register atau info user + logout) juga menggunakan <div class="hidden md:flex">, sehingga tampil rapi di layar besar.
+            - Menambahkan hamburger button dengan <div class="md:hidden">, sehingga pada layar kecil (mobile) menu utama diganti tombol toggle.
+            - Membuat mobile menu dropdown dalam <div class="mobile-menu hidden md:hidden">, yang berisi link navigasi dan user section versi mobile, ditampilkan secara vertikal.
+            - Menggunakan JavaScript sederhana dengan event listener menu.classList.toggle("hidden") untuk menampilkan/menyembunyikan mobile menu ketika tombol hamburger ditekan.
+            - Memastikan seluruh link navigasi diberi efek interaktif dengan kelas Tailwind seperti hover:text-gray-900 atau hover:bg-blue-700 agar lebih menarik dan user friendly di semua ukuran device.
+
 ## TUGAS 4
 -  Apa itu Django AuthenticationForm? Jelaskan juga kelebihan dan kekurangannya.
     AuthenticationForm adalah form bawaan Django yang digunakan untuk menangani proses login user. Form ini menyediakan field username dan password lalu melakukan validasi apakah kombinasi keduanya sesuai dengan data user yang tersimpan di database. Jika valid, maka user dianggap berhasil login, dan jika tidak valid, form otomatis menampilkan pesan error yang sesuai. Dengan begitu, AuthenticationForm mempermudah proses autentikasi tanpa perlu membuat form login dari nol.
