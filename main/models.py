@@ -11,6 +11,7 @@ class Product(models.Model):
         ('aksesoris', 'Aksesoris'),
     ]
 
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, null=True)
     name = models.CharField(max_length=255)
     price = models.IntegerField()
     description = models.TextField()
