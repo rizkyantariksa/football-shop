@@ -19,6 +19,11 @@ from django.utils.html import strip_tags
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
+import requests
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.html import strip_tags
+import json
+from django.http import JsonResponse
 
 # Create your views here.
 @login_required(login_url='/login')
@@ -277,17 +282,14 @@ def register_ajax(request):
             'success': False,
             'error': 'Username already exists'
         }, status=400)
-    
-    # GANTI VALIDASI MANUAL DENGAN DJANGO VALIDATORS
+
     try:
-        # Create temporary user for validation
         temp_user = User(username=username)
         validate_password(password1, user=temp_user)
     except ValidationError as e:
-        # Return all validation errors as one message
         return JsonResponse({
             'success': False,
-            'error': ' '.join(e.messages)  # Gabungkan semua error messages
+            'error': ' '.join(e.messages)
         }, status=400)
     
     # Create user
@@ -304,3 +306,50 @@ def register_ajax(request):
             'success': False,
             'error': str(e)
         }, status=500)
+    
+def proxy_image(request):
+    image_url = request.GET.get('url')
+    if not image_url:
+        return HttpResponse('No URL provided', status=400)
+    
+    try:
+        # Fetch image from external source
+        response = requests.get(image_url, timeout=10)
+        response.raise_for_status()
+        
+        # Return the image with proper content type
+        return HttpResponse(
+            response.content,
+            content_type=response.headers.get('Content-Type', 'image/jpeg')
+        )
+    except requests.RequestException as e:
+        return HttpResponse(f'Error fetching image: {str(e)}', status=500)
+    
+@csrf_exempt
+def create_product_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        name = strip_tags(data.get("name", ""))  # Strip HTML tags
+        description = strip_tags(data.get("description", ""))  # Strip HTML tags
+        category = data.get("category", "")
+        price = data.get("price", "")
+        stock = data.get("stock", "")
+        thumbnail = data.get("thumbnail", "")
+        is_featured = data.get("is_featured", False)
+        user = request.user
+        
+        new_product = Product(
+            name=name, 
+            description=description,
+            category=category,
+            price=price,
+            stock=stock,
+            thumbnail=thumbnail,
+            is_featured=is_featured,
+            user=user
+        )
+        new_product.save()
+        
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)

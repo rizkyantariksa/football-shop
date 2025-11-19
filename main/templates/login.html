@@ -98,12 +98,4 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 });
 </script>
 
-{% if messages %}
-<script>
-{% for message in messages %}
-showToast('{{ message.tags|title }}', '{{ message }}', '{{ message.tags }}');
-{% endfor %}
-</script>
-{% endif %}
-
 {% endblock content %}  
