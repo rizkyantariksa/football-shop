@@ -353,3 +353,25 @@ def create_product_flutter(request):
         return JsonResponse({"status": "success"}, status=200)
     else:
         return JsonResponse({"status": "error"}, status=401)
+    
+@login_required
+def show_my_products_json(request):
+    products = Product.objects.filter(user=request.user)
+    
+    data = []
+    for product in products:
+        data.append({
+            'uuid': str(product.uuid),
+            'name': product.name,
+            'description': product.description,
+            'price': product.price,
+            'thumbnail': product.thumbnail or '',
+            'category': product.category,
+            'brand': product.brand,
+            'stock': product.stock,
+            'is_featured': product.is_featured,
+            'created_at': product.created_at.isoformat(),
+            'user_id': product.user.id,
+        })
+    
+    return JsonResponse(data, safe=False)

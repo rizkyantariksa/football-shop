@@ -7,6 +7,7 @@ from main.views import edit_product
 from main.views import delete_product
 from main.views import add_product_entry_ajax
 from main.views import edit_product_ajax, delete_product_ajax, login_ajax, register_ajax, proxy_image
+from main.views import show_my_products_json
 
 app_name = 'main'
 
@@ -30,4 +31,5 @@ urlpatterns = [
     path('register-ajax/', register_ajax, name='register_ajax'),
     path('proxy-image/', proxy_image, name='proxy_image'),
     path('create-flutter/', create_product_flutter, name='create_product_flutter'),
+    path('my-products-json/', show_my_products_json, name='show_my_products_json'),
 ]
